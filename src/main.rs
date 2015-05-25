@@ -4,6 +4,8 @@ extern crate rand;
 
 use glium::DisplayBuild;
 use glium::Surface;
+use std::env;
+use std::path::Path;
 
 mod chip8;
 
@@ -24,6 +26,15 @@ fn setup_input() {
 }
 
 fn main() {
+
+	///////////////////// COMMAND LINE ARGS //////////////////////////////////
+	let args: Vec<String> = env::args().collect();
+	if args.len() != 2 {
+		println!("Usage: chip8 [PATH_TO_ROM]");
+		return;
+	}
+	let path_to_game = &args[1];
+
 	/////////////////////// CREATE DISPLAY /////////////////////////////////
 	let display = glium::glutin::WindowBuilder::new()
 		.with_title(format!("Rusty Chip-8"))
@@ -97,7 +108,7 @@ fn main() {
 	// initialise the chip8 system 
 	let mut my_chip8 = chip8::Chip8::new();
 	// load the game into the memory
-	my_chip8.load_game("games/TICTAC");
+	my_chip8.load_game(path_to_game);
 	///////////////////////////////////////////////////
 
 	// emulation loop
