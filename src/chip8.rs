@@ -13,12 +13,12 @@ pub struct Chip8 {
 	// CPU registers
 	v: [u8; 16],
 
-	// index register and program counter
+	// index re ister and program counter
 	i: u16,
 	pc: u16,
 
 	// screen: 64 x 32 pixels
-	gfx: [u8; 64 * 32],
+	pub gfx: [u8; 64 * 32],
 	// HEX based keypad (0x0-0xF)
 	key: [u8; 16],
 
@@ -143,6 +143,7 @@ impl Chip8 {
 				0x000E => {
 					self.sp -= 1; // pop the stack
 					self.pc = self.stack[self.sp as usize];
+					self.pc += 2;
 				},
 				_ => println!("Unkown opcode [0x0000]: {:X}", self.opcode),
 			},
@@ -176,9 +177,9 @@ impl Chip8 {
 			//* 5XY0 = Skips the next instruction if VX equals VY.
 			0x5000 => {
 				if self.v[x] == self.v[y] {
-					self.sp += 4;
+					self.pc += 4;
 				} else {
-					self.sp += 2;
+					self.pc += 2;
 				}
 			},
 			//* 6XNN = Sets VX to NN

@@ -5,3 +5,4 @@ authors = ["Jean-Louis Mbaka <jeanlouis.mbaka@gmail.com>"]
 
 [dependencies]
 rand = "*"
+glium = "*"
