@@ -133,14 +133,15 @@ fn main() {
 			}
 
 			let texture = glium::texture::Texture2d::new(&display, image);
-			///////////////////////////////////
+			// texture.sampled().magnify_filter(glium::uniforms::MagnifySamplerFilter::Nearest);
+			///////////////////////////////////////////////////////
 
-			///////////// DRAW /////////////////////
+			/////////////////////////// DRAW /////////////////////
 			let mut target = display.draw();
 			target.clear_color(0.0, 0.0, 1.0, 1.0);
 
 			let uniforms = uniform! {
-				tex: &texture,
+				tex: texture.sampled().magnify_filter(glium::uniforms::MagnifySamplerFilter::Nearest),
 			};
 			target.draw(&vertex_buffer, &indices, &program, &uniforms, &Default::default())
 				.unwrap();
