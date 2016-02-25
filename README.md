@@ -28,6 +28,7 @@ CHIP-8 has 35 opcodes, which are all two bytes long and stored Big-ending. The t
 Of these opcodes, 30/35 are currently implemented in Rusty CHIP-8 (Opcodes in bold are the ones that need to be implemented). 
 
 | Opcode | Explanation |
+-------- | -------------
 | **0NNN** | **Calls RCA 1802 program at address NNN. Not necessary for most ROMs.** |
 | 00E0 | Clears the screen. |
 | 00EE | Returns from a subroutine. |
