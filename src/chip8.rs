@@ -218,7 +218,6 @@ impl Chip8 {
 				//* 8XY4 = Adds VY to VX. VF is set to 1 when there's a carry,
 				// and to 0 when there isn't.
 				0x0004 => { // 8XY4 = add the value of VY to VX
-
 					if self.v[y] > (0xFF - self.v[x]) {
 						self.v[0xF] = 1; // carry
 					} else {
@@ -229,7 +228,7 @@ impl Chip8 {
 					self.pc += 2;
 				},
 				0x0005 => { //* 8XY5 =
-					if self.v[x] < self.v[y] {
+					if self.v[y] > self.v[x] {
 						self.v[0xF] = 0 // borrow
 					} else {
 						self.v[0xF] = 1;
@@ -396,6 +395,7 @@ impl Chip8 {
 
 				//* FX1E = Adds VX to I.
 				0x001E => {
+					// TODO CARRY BIT
 					self.i += self.v[x] as u16;
 					self.pc += 2;
 				},
