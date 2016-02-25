@@ -56,12 +56,11 @@ fn main() {
 	let shape = vec![vertex1, vertex2, vertex3, vertex4];
 
 	// uploading this shape to the memory of our video card in what is called a vertex buffer
-	let vertex_buffer = glium::VertexBuffer::new(&display, shape);
+	let vertex_buffer = glium::VertexBuffer::new(&display, &shape).unwrap();
 
 	// to tell OpenGL how to link these vertices together to obtain triangles.
 	// let indices = glium::index::NoIndices(glium::index::PrimitiveType::Points);
-	let indices = glium::IndexBuffer::new(&display, 
-		glium::index::TriangleStrip(vec![1 as u16, 2, 0, 3]));
+	let indices = glium::IndexBuffer::new(&display, glium::index::PrimitiveType::TriangleStrip, &[1 as u16, 2, 0, 3]).unwrap();
 
 	/////////////////// SHADERS /////////////////////////////////////////
 	let vertex_shader_src = r#"
@@ -95,9 +94,7 @@ fn main() {
 		"#;
 
 	// send shaders source code to the glium library
-	let program = glium::Program::from_source(&display, vertex_shader_src, 
-		fragment_shader_src, None)
-		.unwrap();
+	let program = glium::Program::from_source(&display, vertex_shader_src, fragment_shader_src, None).unwrap();
 
 	//////////////// INPUT /////////////////////////////
 	setup_input();
@@ -132,7 +129,7 @@ fn main() {
 				}		
 			}
 
-			let texture = glium::texture::Texture2d::new(&display, image);
+			let texture = glium::texture::Texture2d::new(&display, image).unwrap();
 			// texture.sampled().magnify_filter(glium::uniforms::MagnifySamplerFilter::Nearest);
 			///////////////////////////////////////////////////////
 
@@ -143,14 +140,16 @@ fn main() {
 			let uniforms = uniform! {
 				tex: texture.sampled().magnify_filter(glium::uniforms::MagnifySamplerFilter::Nearest),
 			};
-			target.draw(&vertex_buffer, &indices, &program, &uniforms, &Default::default())
-				.unwrap();
-			target.finish();
+			target.draw(&vertex_buffer, &indices, &program, &uniforms, &Default::default()).unwrap();
+			target.finish().unwrap();
 
 			///////////////////////////////////////
 
-			if display.is_closed() {
-				break;
+			for ev in display.poll_events() {
+				match ev {
+					glium::glutin::Event::Closed => return,
+					_ => ()
+				}
 			}
 		}
 
