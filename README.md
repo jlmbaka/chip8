@@ -9,7 +9,7 @@ I have implemented this emulator based on the excellent blog post by Laurence Mu
 
 CHIP-8 is a virtual machine (VM) developed in the 70'S by Josheph Weisbecker. Games written in the Chip-8 programming language could run on systems that had a Chip-8 interpreter.
 
-As an emulator, Rusty CHIP-8 is a computer program that mimics the internal design and functionality of a computer system. Therefore, it can run software desngined for the mimicked computer system.
+As an emulator, Rusty CHIP-8 is a computer program that mimics the internal design and functionality of a computer system. Therefore, it can run software designed for the mimicked computer system.
 
 As an interpretor, it understands the emulated system, and knows what to do when it encouters instructions from that system.
 
